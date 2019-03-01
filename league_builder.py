@@ -26,10 +26,11 @@ if __name__ == "__main__" :
     for team in league.keys():
       print(count,": ",team)
       count +=1
-    if input("Would you like to create another team? (Y/N) ").upper() == "Y":
-      name = input("What is the name of the team? ")
-      players = []
-      league[name] = players
+    if count < (len(players_list)):
+      if input("Would you like to create another team? (Y/N) ").upper() == "Y": 
+        name = input("What is the name of the team? ")
+        players = []
+        league[name] = players
     else:
       cls()
       print("OK! The ", (len(players_list)-1), "players in the League will be split between the", len(league),"following team(s):")
