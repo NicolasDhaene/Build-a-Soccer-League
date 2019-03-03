@@ -26,24 +26,27 @@ if __name__ == "__main__" :
     for team in league.keys():
       print(count,": ",team)
       count +=1
+    #the while loop continues for as long as the user expresses the wish to add a new team or that there wouldnt be more teams than players in the league
     if count < (len(players_list)):
       if input("Would you like to create another team? (Y/N) ").upper() == "Y": 
         name = input("What is the name of the team? ")
         players = []
         league[name] = players
+      else:
+        break
     else:
-      cls()
-      print("OK! The ", (len(players_list)-1), "players in the League will be split between the", len(league),"following team(s):")
-      count = 1
-      for team in league.keys():
-        print(count,": ",team)
-        count +=1
-      print("")
-      print("See file text.txt for a detail of the",len(league),"teams.")
-      print("")
-      print("See",(len(players_list)-1),"individual text files for welcome letters.")
-      print("") 
       break
+  cls()
+  print("OK! The ", (len(players_list)-1), "players in the League will be split between the", len(league),"following team(s):")
+  count = 1
+  for team in league.keys():
+    print(count,": ",team)
+    count +=1
+  print("")
+  print("See file text.txt for a detail of the",len(league),"teams.")
+  print("")
+  print("See",(len(players_list)-1),"individual text files for welcome letters.")
+  print("")       
   for player in players_list:
     player.pop(1)
   experienced_players = []
@@ -53,10 +56,12 @@ if __name__ == "__main__" :
       experienced_players.append(player[0:])
     else:
       unexperienced_players.append(player[0:])
+  #the experienced players list is split towards each team with a step of len(league) and starting at the index 0 and forwards (count = 0....+1).
   count = 0
   for value in league.values():
     value.extend(experienced_players[count::len(league)])
     count +=1
+  #the unexperienced players list is split towards each team with a step of len(league) and starting at an index corresponding to the total number of teams within the league and backwards (count = len(league)-1.....-1). This difference in the "start point" (as compared to the experienced players splitting method) is meant to balance the total number of players amongst the teams in case of an uneven split in both experienced players and unexperienced players.
   count = len(league)-1
   for value in league.values():
     value.extend(unexperienced_players[count::len(league)])
@@ -76,4 +81,3 @@ if __name__ == "__main__" :
       guardian = value[2]
       with open(file_name, "w") as file:
         file.write(TEXT.format(guardian, name, keys))
-      
